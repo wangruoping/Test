@@ -25,7 +25,7 @@ public class CompanyUserEntity {
 	private String username;
 	// 密码
 	private String password;
-	// 图片地址
+	// 是否是管理
 	private String admin;
 
 	public String getId() {
