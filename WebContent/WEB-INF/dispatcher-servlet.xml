@@ -103,17 +103,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>cn.pxl.app.ms.entity.MagzinesEntity</value>
-				<value>cn.pxl.app.ms.entity.UserEntity</value>
-				<value>cn.pxl.app.ms.entity.CommentsEntity</value>
-				<value>cn.pxl.app.ms.entity.ConsumeEntity</value>
-				<value>cn.pxl.app.ms.entity.MagzinesCategoryEntity</value>
-				<value>cn.pxl.app.ms.entity.RechargeEntity</value>
-				<value>cn.pxl.app.ms.entity.UserFansEntity</value>
-				<value>cn.pxl.app.ms.entity.AgreeEntity</value>
-				<value>cn.pxl.app.ms.entity.DownloadEntity</value>
-				<value>cn.pxl.app.ms.entity.PrintEntity</value>
-				<value>cn.pxl.app.ms.entity.PrintAmountEntity</value>
+				<value>cn.pxl.app.ms.entity.CompanyUserEntity</value>
 			</list>
 		</property>
 	</bean>
