@@ -5,14 +5,13 @@ import java.util.List;
 import cn.pxl.app.ms.entity.CompanyUserEntity;
 
 public interface UserDao extends BaseDao<CompanyUserEntity> {
-	long hasEntity(String id);
-	CompanyUserEntity findUserByThirdUserId(String thirdUserId,String loginType);
-	List<CompanyUserEntity> getUserGzList(String userid);
-	int isUserGzAndFs(String id, String userid);
-	List<CompanyUserEntity> getUserFsList(String userid);
+	
+	/**
+	 * 分页用的两个方法
+	 * 
+	 * */
 	long countForPagingList();
 	List<CompanyUserEntity> pagingList(int offset, int limit);
-	CompanyUserEntity findUserByAccount(String acount);
 	
 	/**
 	 * 根据用户名密码获取用户信息
