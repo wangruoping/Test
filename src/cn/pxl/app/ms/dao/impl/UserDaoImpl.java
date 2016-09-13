@@ -12,18 +12,18 @@ import cn.pxl.app.ms.dao.UserDao;
 import cn.pxl.app.ms.entity.CommentsEntity;
 import cn.pxl.app.ms.entity.ConsumeEntity;
 import cn.pxl.app.ms.entity.RechargeEntity;
-import cn.pxl.app.ms.entity.UserEntity;
+import cn.pxl.app.ms.entity.CompanyUserEntity;
 
 @Repository("userDao")
-public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl<CompanyUserEntity> implements UserDao {
 
 	Logger log = Logger.getLogger(UserDaoImpl.class);
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<UserEntity> findAll() {
+	public List<CompanyUserEntity> findAll() {
 		Session session = sessionFactory.openSession();
-		List<UserEntity> list = session.createCriteria(UserEntity.class).list();
+		List<CompanyUserEntity> list = session.createCriteria(CompanyUserEntity.class).list();
 		session.close();
 		return list;
 	}
@@ -39,15 +39,15 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public UserEntity findById(String id) {
+	public CompanyUserEntity findById(String id) {
 		Session session = sessionFactory.openSession();
-		UserEntity object =  (UserEntity) session.get(UserEntity.class, id);
+		CompanyUserEntity object =  (CompanyUserEntity) session.get(CompanyUserEntity.class, id);
 		session.close();
 		return object;
 	}
 
 	@Override
-	public UserEntity findUserByThirdUserId(String thirdUserId,String loginType) {
+	public CompanyUserEntity findUserByThirdUserId(String thirdUserId,String loginType) {
 		Session session = sessionFactory.openSession();
 		log.info("查询第三方用户信息开始");
 		Query query = session.createQuery("from UserEntity userEntity where "
@@ -58,7 +58,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 		query.setParameter("threeUserId", thirdUserId);
 		query.setParameter("loginType", loginType.toString());
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		log.info("查询结果");
 		log.info(result);
 		session.close();
@@ -69,12 +69,12 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public List<UserEntity> getUserGzList(String userid) {
+	public List<CompanyUserEntity> getUserGzList(String userid) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("select ufe.attentionUserEntity from UserFansEntity ufe where ufe.userEntity.id = ?");
 		query.setParameter(0, userid);
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		session.close();
 		return result;
 	}
@@ -86,7 +86,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 		query.setParameter(0, userid);
 		query.setParameter(1, id);
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		session.close();
 		if(result.size() > 0 ){
 			return 1;
@@ -95,12 +95,12 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public List<UserEntity> getUserFsList(String userid) {
+	public List<CompanyUserEntity> getUserFsList(String userid) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("select ufe.userEntity from UserFansEntity ufe where ufe.attentionUserEntity.id = ?");
 		query.setParameter(0, userid);
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		session.close();
 		return result;
 	}
@@ -162,11 +162,11 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public List<UserEntity> pagingList(int offset, int limit) {
+	public List<CompanyUserEntity> pagingList(int offset, int limit) {
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<UserEntity> list = (List<UserEntity>) session
-				.createCriteria(UserEntity.class)
+		List<CompanyUserEntity> list = (List<CompanyUserEntity>) session
+				.createCriteria(CompanyUserEntity.class)
 				.addOrder(Order.desc("createDate"))
 				.setFirstResult((offset - 1) * limit).setMaxResults(limit).list();
 		session.close();
@@ -185,7 +185,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public UserEntity findUserByAccountAndPassword(String acount,
+	public CompanyUserEntity findUserByAccountAndPassword(String acount,
 			String password) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("from UserEntity userEntity where "
@@ -194,7 +194,7 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 		query.setParameter("acount", acount);
 		query.setParameter("password", password);
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		session.close();
 		if(result.size() > 0 ){
 			return result.get(0);
@@ -203,13 +203,13 @@ public class UserDaoImpl extends BaseDaoImpl<UserEntity> implements UserDao {
 	}
 
 	@Override
-	public UserEntity findUserByAccount(String acount) {
+	public CompanyUserEntity findUserByAccount(String acount) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("from UserEntity userEntity where "
 				+ "acount = :acount order by createDate desc");
 		query.setParameter("acount", acount);
 		@SuppressWarnings("unchecked")
-		List<UserEntity> result = query.list();
+		List<CompanyUserEntity> result = query.list();
 		session.close();
 		if(result.size() > 0 ){
 			return result.get(0);

@@ -32,7 +32,7 @@ import cn.pxl.app.ms.dto.ConsumeDto;
 import cn.pxl.app.ms.dto.PagingDto;
 import cn.pxl.app.ms.dto.RechargeDto;
 import cn.pxl.app.ms.dto.UserDto;
-import cn.pxl.app.ms.entity.UserEntity;
+import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.service.UserService;
 import cn.pxl.app.ms.util.CommonUtils;
 
@@ -43,52 +43,6 @@ public class UserController {
 	
 	@Resource(name="userService")
 	private UserService userService;
-	
-	/**
-	 * 第三方登陆 用户添加
-	 * 
-	 * */
-	@RequestMapping(value = "addThirdUser") 
-	public @ResponseBody Map<String, String> addUser(
-			@RequestParam("username") String username,
-			@RequestParam("userAddress") String userAddress,
-			@RequestParam("threeUserId") String threeUserId,
-			@RequestParam("picPath") String picPath,
-			@RequestParam("sex") String sex,
-			@RequestParam("loginType") String loginType
-			){
-		Map<String, String> result = new HashMap<String, String>();
-		
-		//先查询是否存在同一个第三方ID,如果存在就更新用户信息
-		UserEntity updateUserEntity = userService.findUserEntityByThirdUserId(threeUserId,loginType);
-		if(updateUserEntity != null){
-			result.put("userId", updateUserEntity.getId()); 
-			result.put("threeUserId", updateUserEntity.getThreeUserId()); 
-			result.put("userImagePath", updateUserEntity.getPicPath()); 
-			result.put("username", updateUserEntity.getUsername()); 
-			result.put("userAddress", updateUserEntity.getUserAddress()); 
-			result.put("userSex", updateUserEntity.getSex()); 
-			result.put("address", updateUserEntity.getAddress()); 
-			result.put("phone", updateUserEntity.getPhone()); 
-			result.put("youbian", updateUserEntity.getYoubian()); 
-			result.put("loginFlag", "1"); 
-		}else{
-			UserEntity userEntity = new UserEntity();
-			userEntity.setUsername(username);
-			userEntity.setThreeUserId(threeUserId);
-			userEntity.setAmount(new BigDecimal("0"));
-			userEntity.setSex(sex);
-			userEntity.setPicPath(picPath);
-			userEntity.setLoginType(loginType);
-			userEntity.setUserAddress(userAddress);
-			userEntity.setCreateDate(new Date());
-			userService.addUser(userEntity);
-			result.put("userId", userEntity.getId());
-			result.put("loginFlag", "0"); 
-		}
-		
-		return result;
-	}
 	
 	/**
 	 * 本地登陆 用户添加
@@ -103,7 +57,7 @@ public class UserController {
 		Map<String, String> result = new HashMap<String, String>();
 		
 		if("1".equals(handleType)){
-			UserEntity userEntity = userService.findUserByAccountAndPassword(acount,CommonUtils.encodePassword(password));
+			CompanyUserEntity userEntity = userService.findUserByAccountAndPassword(acount,CommonUtils.encodePassword(password));
 			if(userEntity != null){
 				result.put("flag", "0");
 				result.put("userId", userEntity.getId());
@@ -119,11 +73,11 @@ public class UserController {
 			}
 		}else{
 			
-			UserEntity existUserEntity = userService.findUserByAccount(acount);
+			CompanyUserEntity existUserEntity = userService.findUserByAccount(acount);
 			if(existUserEntity != null){
 				result.put("flag", "1");
 			}else{
-				UserEntity userEntity = new UserEntity();
+				CompanyUserEntity userEntity = new CompanyUserEntity();
 				userEntity.setAcount(acount);
 				userEntity.setAmount(new BigDecimal("0"));
 				userEntity.setCreateDate(new Date());
@@ -166,7 +120,7 @@ public class UserController {
 			@RequestParam("youbian") String youbian
 			){
 		Map<String, String> result = new HashMap<String, String>();
-		UserEntity userEntity = userService.findUserEntityByUserId(userid);
+		CompanyUserEntity userEntity = userService.findUserEntityByUserId(userid);
 		if(userEntity != null){
 			userEntity.setSex(sex);
 			userEntity.setAddress(address);

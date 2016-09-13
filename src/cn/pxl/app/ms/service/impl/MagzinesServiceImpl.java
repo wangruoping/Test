@@ -53,7 +53,7 @@ import cn.pxl.app.ms.entity.MagzinesCategoryEntity;
 import cn.pxl.app.ms.entity.MagzinesEntity;
 import cn.pxl.app.ms.entity.PrintAmountEntity;
 import cn.pxl.app.ms.entity.PrintEntity;
-import cn.pxl.app.ms.entity.UserEntity;
+import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.form.PrintAmountFrom;
 import cn.pxl.app.ms.service.MagzinesService;
 import cn.pxl.app.ms.util.CommonUtils;
@@ -196,7 +196,7 @@ public class MagzinesServiceImpl implements MagzinesService {
 		}
         
         magzinesEntity.setDeleteFlag(0);
-        UserEntity userEntity = (UserEntity) userDao.findById(userid);
+        CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
     	if(userEntity != null){
     		 magzinesEntity.setUserEntity(userEntity);
     	}else{
@@ -497,7 +497,7 @@ public class MagzinesServiceImpl implements MagzinesService {
     public String insertComment(String magId, String commentContent,
             String userid) {
         MagzinesEntity magzinesEntity = (MagzinesEntity) magzinesDao.findById(magId);
-        UserEntity userEntity = (UserEntity) userDao.findById(userid);
+        CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
         CommentsEntity commentsEntity = new CommentsEntity();
         commentsEntity.setCommentContent(commentContent);
         commentsEntity.setMagzinesEntity(magzinesEntity);
@@ -522,7 +522,7 @@ public class MagzinesServiceImpl implements MagzinesService {
             return "2";
         }else{
             MagzinesEntity magzinesEntity = (MagzinesEntity) magzinesDao.findById(magId);
-            UserEntity userEntity = (UserEntity) userDao.findById(userId);
+            CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userId);
             AgreeEntity newAgreeEntity = new AgreeEntity();
 
             newAgreeEntity.setMagzinesEntity(magzinesEntity);
@@ -580,7 +580,7 @@ public class MagzinesServiceImpl implements MagzinesService {
     		}
     		magzinesEntity.setZfMagId(magId);
             magzinesEntity.setFileComment(zfCommentContent);
-            UserEntity userEntity = (UserEntity) userDao.findById(userid);
+            CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
             magzinesEntity.setUserEntity(userEntity);
             magzinesEntity.setUploadTime(new Timestamp(System.currentTimeMillis()));
             magzinesEntity.setPublicTypeSet(0);
@@ -905,7 +905,7 @@ public class MagzinesServiceImpl implements MagzinesService {
         //店铺杂志
         magzinesEntity.setPublicTypeSet(1);
         String userId = "FFFF";
-        UserEntity ue = (UserEntity) userDao.findById(userId);
+        CompanyUserEntity ue = (CompanyUserEntity) userDao.findById(userId);
         magzinesEntity.setUserEntity(ue);
         this.save(magzinesEntity);
         
@@ -1000,7 +1000,7 @@ public class MagzinesServiceImpl implements MagzinesService {
 		ConsumeEntity consumeEntity = new ConsumeEntity();
 		MagzinesEntity magzinesEntity = (MagzinesEntity) magzinesDao.findById(magId);
 		consumeEntity.setMagzinesEntity(magzinesEntity);
-		UserEntity userEntity = (UserEntity) userDao.findById(userid);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
 		
 		if(magzinesEntity != null && userEntity != null){
 			if(magzinesEntity.getFileAmount().compareTo(userEntity.getAmount()) > 0){
@@ -1018,7 +1018,7 @@ public class MagzinesServiceImpl implements MagzinesService {
 		consumeDao.save(consumeEntity);
 		
 		//更新上传杂志用户余额
-		UserEntity sellUserEntity = magzinesEntity.getUserEntity();
+		CompanyUserEntity sellUserEntity = magzinesEntity.getUserEntity();
 		sellUserEntity.setAmount(sellUserEntity.getAmount().add(magzinesEntity.getFileAmount()));
 		userDao.update(sellUserEntity);
 		
@@ -1056,7 +1056,7 @@ public class MagzinesServiceImpl implements MagzinesService {
 			DownloadEntity downloadEntity = new DownloadEntity();
 			MagzinesEntity magzinesEntity = (MagzinesEntity) magzinesDao.findById(magId);
 			downloadEntity.setMagzinesEntity(magzinesEntity);
-			UserEntity userEntity = (UserEntity)userDao.findById(userid);
+			CompanyUserEntity userEntity = (CompanyUserEntity)userDao.findById(userid);
 			downloadEntity.setUserEntity(userEntity);
 			downloadDao.save(downloadEntity);
 		}

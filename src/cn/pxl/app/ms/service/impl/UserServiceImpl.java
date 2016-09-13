@@ -27,7 +27,7 @@ import cn.pxl.app.ms.dto.UserDto;
 import cn.pxl.app.ms.entity.CommentsEntity;
 import cn.pxl.app.ms.entity.ConsumeEntity;
 import cn.pxl.app.ms.entity.RechargeEntity;
-import cn.pxl.app.ms.entity.UserEntity;
+import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.entity.UserFansEntity;
 import cn.pxl.app.ms.service.UserService;
 import cn.pxl.app.ms.util.CommonUtils;
@@ -48,12 +48,12 @@ public class UserServiceImpl implements UserService {
     private RechargeDao rechargeDao;
 	
 	@Override
-	public void addUser(UserEntity userEntity) {
+	public void addUser(CompanyUserEntity userEntity) {
 		userDao.save(userEntity);
 	}
 
 	@Override
-	public List<UserEntity> findAllUser() {
+	public List<CompanyUserEntity> findAllUser() {
 		return userDao.findAll();
 	}
 
@@ -67,19 +67,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserEntity findUserEntityByUserId(String userId) {
+	public CompanyUserEntity findUserEntityByUserId(String userId) {
 		
-		UserEntity userEntity = (UserEntity) userDao.findById(userId);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userId);
 		return userEntity;
 	}
 
 	@Override
-	public void updateUser(UserEntity userEntity) {
+	public void updateUser(CompanyUserEntity userEntity) {
 		userDao.update(userEntity);
 	}
 
 	@Override
-	public UserEntity findUserEntityByThirdUserId(String thirdUserId,String loginType) {
+	public CompanyUserEntity findUserEntityByThirdUserId(String thirdUserId,String loginType) {
 		return userDao.findUserByThirdUserId(thirdUserId,loginType);
 	}
 
@@ -87,11 +87,11 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getUserGzList(String userid) {
 		List<UserDto> userDtos = new ArrayList<UserDto>();
 		
-		List<UserEntity> userEntities = userDao.getUserGzList(userid);
+		List<CompanyUserEntity> userEntities = userDao.getUserGzList(userid);
 		
 		UserDto userDto = new UserDto();
 		for(int k = 0; k < userEntities.size();k++){
-			UserEntity userEntity = userEntities.get(k);
+			CompanyUserEntity userEntity = userEntities.get(k);
 			userDto.setUserId(userEntity.getId());
 			userDto.setUserImgPath(userEntity.getPicPath());
 			userDto.setUsername(userEntity.getUsername());
@@ -111,11 +111,11 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getUserFsList(String userid) {
 List<UserDto> userDtos = new ArrayList<UserDto>();
 		
-		List<UserEntity> userEntities = userDao.getUserFsList(userid);
+		List<CompanyUserEntity> userEntities = userDao.getUserFsList(userid);
 		
 		UserDto userDto = new UserDto();
 		for(int k = 0; k < userEntities.size();k++){
-			UserEntity userEntity = userEntities.get(k);
+			CompanyUserEntity userEntity = userEntities.get(k);
 			userDto.setUserId(userEntity.getId());
 			userDto.setUserImgPath(userEntity.getPicPath());
 			userDto.setUsername(userEntity.getUsername());
@@ -134,8 +134,8 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	
 	@Override
 	public void insertGzInfo(String gzUserid, String bgzUserid) {
-		UserEntity gzUserEntity = (UserEntity) userDao.findById(gzUserid);
-		UserEntity bgzUserEntity = (UserEntity) userDao.findById(bgzUserid);
+		CompanyUserEntity gzUserEntity = (CompanyUserEntity) userDao.findById(gzUserid);
+		CompanyUserEntity bgzUserEntity = (CompanyUserEntity) userDao.findById(bgzUserid);
 		UserFansEntity userFansEntity = new UserFansEntity();
 		userFansEntity.setUserEntity(gzUserEntity);
 		userFansEntity.setAttentionUserEntity(bgzUserEntity);
@@ -146,7 +146,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	@Override
 	public UserDto getUserInfo(String userid) {
 		UserDto userDto = new UserDto();
-		UserEntity userEntity = (UserEntity) userDao.findById(userid);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
 		if(userEntity != null){
 			userDto.setUserId(userEntity.getId());
 			//用户名
@@ -167,10 +167,10 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 			userDto.setSex(userEntity.getSex());
 
 		    //用户关注数
-			List<UserEntity> userGzEntities = userDao.getUserGzList(userid);
+			List<CompanyUserEntity> userGzEntities = userDao.getUserGzList(userid);
 			userDto.setLookCount(String.valueOf(userGzEntities.size()));
 			//用户粉丝数
-			List<UserEntity> userFsEntities = userDao.getUserFsList(userid);
+			List<CompanyUserEntity> userFsEntities = userDao.getUserFsList(userid);
 			userDto.setFansCount(String.valueOf(userFsEntities.size()));
 			//用户杂志数
 			String magCount = magzinesDao.getUserMagCount(userid);
@@ -250,7 +250,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	public String insertRecharge(String userid, String rechargeAmount,String rechargeFlag ,int rechargeType,String rechargeDate) {
 		
 		RechargeEntity rechargeEntity = new RechargeEntity();
-		UserEntity userEntity = (UserEntity) userDao.findById(userid);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
 		
 		rechargeEntity.setRechargeAmount(new BigDecimal(rechargeAmount));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -285,8 +285,8 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
         result.setTotal(userDao.countForPagingList());
 
         if (result.getTotal() > 0) {
-            List<UserEntity> list = userDao.pagingList(offset, limit);
-            for (UserEntity ue : list) {
+            List<CompanyUserEntity> list = userDao.pagingList(offset, limit);
+            for (CompanyUserEntity ue : list) {
             	UserDto dto = new UserDto();
             	dto.setAmount(ue.getAmount().toString());
             	dto.setUserId(ue.getId());
@@ -315,13 +315,13 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	}
 
 	@Override
-	public UserEntity findUserByAccountAndPassword(String acount,
+	public CompanyUserEntity findUserByAccountAndPassword(String acount,
 			String password) {
 		return userDao.findUserByAccountAndPassword(acount,password);
 	}
 
 	@Override
-	public UserEntity findUserByAccount(String acount) {
+	public CompanyUserEntity findUserByAccount(String acount) {
 		return userDao.findUserByAccount(acount);
 	}
 
@@ -336,7 +336,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
             return "";
         }
  
-        UserEntity ue = (UserEntity) userDao.findById(userid);
+        CompanyUserEntity ue = (CompanyUserEntity) userDao.findById(userid);
         if(ue != null){
              ue.setPicPath(imageUrl);
              userDao.update(ue);  
@@ -350,7 +350,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	@Override
 	public File getUserImage(String userid) {
 
-		UserEntity userEntity = (UserEntity) userDao.findById(userid);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
 		
 		if(userEntity != null){
 			
@@ -378,7 +378,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
             return "";
         }
  
-        UserEntity ue = userDao.findUserByThirdUserId(userid, usertype);
+        CompanyUserEntity ue = userDao.findUserByThirdUserId(userid, usertype);
         if(ue != null){
              ue.setPicPath(imageUrl);
              userDao.update(ue);  
@@ -390,7 +390,7 @@ List<UserDto> userDtos = new ArrayList<UserDto>();
 	
 	@Override
 	public String validUserAmount(String userid, String amount) {
-		UserEntity userEntity = (UserEntity) userDao.findById(userid);
+		CompanyUserEntity userEntity = (CompanyUserEntity) userDao.findById(userid);
 		
 		if(userEntity != null){
 			
