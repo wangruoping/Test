@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.service.UserService;
-import cn.pxl.app.ms.util.CommonUtils;
 
 @Controller
 public class LoginController {
@@ -25,12 +25,12 @@ public class LoginController {
 	public String login(@RequestParam(value="username", required=true) String username,
 			@RequestParam(value="password", required=true) String password) {
 		
-		String aau = CommonUtils.getConfig("account.admin.username");
-		String aap = CommonUtils.getConfig("account.admin.password");
-		
-		if (aau.equals(username) && aap.equals(password)) {
+		CompanyUserEntity companyUserEntity = userService.getUserInfoByNameAndPass(username, password);
+		if (companyUserEntity != null) {
+			//登陆成功
 			return "main";
 		} else {
+			//登陆失败
 			return "index";
 		}
 	}

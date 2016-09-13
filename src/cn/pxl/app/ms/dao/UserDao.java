@@ -13,4 +13,14 @@ public interface UserDao extends BaseDao<CompanyUserEntity> {
 	long countForPagingList();
 	List<CompanyUserEntity> pagingList(int offset, int limit);
 	CompanyUserEntity findUserByAccount(String acount);
+	
+	/**
+	 * 根据用户名密码获取用户信息
+	 * 
+	 * @param username 用户名
+	 * @param password 密码
+	 * 
+	 * @return 用户信息
+	 * */
+	CompanyUserEntity getUserInfoByNameAndPass(String username, String password);
 }

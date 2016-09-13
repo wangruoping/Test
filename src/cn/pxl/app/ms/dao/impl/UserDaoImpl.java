@@ -119,6 +119,28 @@ public class UserDaoImpl extends BaseDaoImpl<CompanyUserEntity> implements UserD
 		return null;
 	}
 
+	@Override
+	public CompanyUserEntity getUserInfoByNameAndPass(String username, String password) {
+		Session session = sessionFactory.openSession();
+		log.info("查询用户信息开始");
+		Query query = session.createQuery("from CompanyUserEntity userEntity where "
+				+ "username = :username"
+				+ " and password = :password");
+		log.info("查询准备");
+		log.info(query);
+		query.setParameter("username", username);
+		query.setParameter("password", password);
+		@SuppressWarnings("unchecked")
+		List<CompanyUserEntity> result = query.list();
+		log.info("查询结果");
+		log.info(result);
+		session.close();
+		if(result.size() > 0 ){
+			return result.get(0);
+		}
+		return null;
+	}
+
 	
 
 
