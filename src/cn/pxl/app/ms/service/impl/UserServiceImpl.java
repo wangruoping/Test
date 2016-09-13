@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import cn.pxl.app.ms.dao.UserDao;
 import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.service.UserService;
+import cn.pxl.app.ms.util.CommonUtils;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public CompanyUserEntity getUserInfoByNameAndPass(String username, String password) {
-		return userDao.getUserInfoByNameAndPass(username, password);
+		return userDao.getUserInfoByNameAndPass(username, CommonUtils.encodePassword(password));
 	}
 	
 	
