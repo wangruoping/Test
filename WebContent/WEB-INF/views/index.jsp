@@ -5,7 +5,7 @@
 	    <meta charset="UTF-8">
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	    <title></title>
-	    <link rel="stylesheet" type="text/css" href="styles/themes/bootstrap/easyui.css">
+	    <link rel="stylesheet" type="text/css" href="styles/themes/default/easyui.css">
 	    <link rel="stylesheet" type="text/css" href="styles/themes/icon.css">
 	    <script type="text/javascript" src="js/jquery.min.js"></script>
 	    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>

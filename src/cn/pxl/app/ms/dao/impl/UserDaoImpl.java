@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.pxl.app.ms.dao.UserDao;
@@ -19,7 +21,7 @@ public class UserDaoImpl extends BaseDaoImpl<CompanyUserEntity> implements UserD
 	@Override
 	public long countForPagingList() {
 		Session session = sessionFactory.openSession();
-		String hql = "select count(*) from CompanyUserEntity as userEntity";
+		String hql = "select count(*) from CompanyUserEntity as userEntity where userEntity.admin = '0'";
 		Query query = session.createQuery(hql);
 		long result = (Long) (query.uniqueResult());
 		session.close();
@@ -32,6 +34,7 @@ public class UserDaoImpl extends BaseDaoImpl<CompanyUserEntity> implements UserD
 		@SuppressWarnings("unchecked")
 		List<CompanyUserEntity> list = (List<CompanyUserEntity>) session
 				.createCriteria(CompanyUserEntity.class)
+				.add(Restrictions.eq("admin", "0"))
 				.addOrder(Order.desc("username"))
 				.setFirstResult((offset - 1) * limit).setMaxResults(limit).list();
 		session.close();
