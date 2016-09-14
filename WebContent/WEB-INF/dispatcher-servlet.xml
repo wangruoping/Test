@@ -104,6 +104,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="annotatedClasses">
 			<list>
 				<value>cn.pxl.app.ms.entity.CompanyUserEntity</value>
+				<value>cn.pxl.app.ms.entity.CompanyTemplateEntity</value>
 			</list>
 		</property>
 	</bean>

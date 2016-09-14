@@ -121,6 +121,8 @@ public class TemplateController {
 					}
 				}
 				companyTemplateEntity.setName(companyTemplateForm.getName());
+				companyTemplateEntity.setWidth(companyTemplateForm.getWidth());
+				companyTemplateEntity.setHeight(companyTemplateForm.getHeight());
 				if (templateService.updateTemplate(companyTemplateEntity)) {
 					rd.setStatus("1");
 					rd.setContent("");

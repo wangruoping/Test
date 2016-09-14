@@ -10,8 +10,8 @@ function editTemplateInfo(templateId){
 			var tempalteInfo = data.content;				
 			$("#editTemplateId").val(tempalteInfo.id);
 			$("#templateName").val(tempalteInfo.name);
-			$("#templateHeight").val(tempalteInfo.height);
-			$("#templateWidth").val(tempalteInfo.width);
+			$("#templateHeight").numberbox("setValue", tempalteInfo.height);
+			$("#templateWidth").numberbox("setValue", tempalteInfo.width);
 			$("#popWindow").window("open");
 		}else{
 			$.messager.alert("提示","模板信息不存在！","info",function(){					
@@ -59,11 +59,11 @@ $(function(){
                         return value + "像素";  
                     }
                 },
-                {field:'id',title:'操作',width:60,align:'center',
+                {field:'id',title:'操作',width:200,align:'center',
                     formatter:function(value,rec){
                         var editbtn = '<a class="editcls" onclick="editTemplateInfo(\''+rec.id+'\')" href="javascript:void(0)">编辑</a>';
                         var designerbtn = '<a class="designercls" onclick="designerTemplateInfo(\''+rec.id+'\')" href="javascript:void(0)">设计模板</a>';
-                        return btn + " " + designerbtn;  
+                        return editbtn + " " + designerbtn;  
                     }
                 }
             ]],

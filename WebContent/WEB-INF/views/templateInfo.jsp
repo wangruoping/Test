@@ -27,17 +27,17 @@
 			<form id="templateInfoForm" method="post">
 				<table>
 					<tr>
-						<td style="width:50px;">模板名称：</td>
+						<td style="width:120px;">模板名称：</td>
 						<td><input id="templateName" class="easyui-validatebox"
 							name="name" data-options="required:true" maxlength=10/></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">宽度（像素）：</td>
+						<td style="width:120px;">宽度（像素）：</td>
 						<td><input id="templateWidth" class="easyui-numberbox"
 							name="width" data-options="required:true" maxlength=5/></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">高度（像素）：</td>
+						<td style="width:120px;">高度（像素）：</td>
 						<td><input id="templateHeight" class="easyui-numberbox"
 							name="height" data-options="required:true" maxlength=5/></td>
 					</tr>
