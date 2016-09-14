@@ -45,6 +45,36 @@ public class UserServiceImpl implements UserService {
         result.setRows(resultList);
         return result;
 	}
+
+	@Override
+	public CompanyUserEntity getUserInfo(String userid) {
+		return (CompanyUserEntity) userDao.findById(userid);
+	}
 	
-	
+	@Override
+	public boolean addUser(CompanyUserEntity userEntity) {
+		userDao.save(userEntity);
+		return true;
+	}
+
+	@Override
+	public boolean updateUser(CompanyUserEntity userEntity) {
+		userDao.update(userEntity);
+		return true;
+	}
+
+	@Override
+	public boolean deleteUserList(String[] userIdStrings) {
+		for (int i = 0; i < userIdStrings.length; i++) {
+			CompanyUserEntity userEntity = new CompanyUserEntity();
+			userEntity.setId(userIdStrings[i]);
+			userDao.delete(userEntity);
+		}
+		return true;
+	}
+
+	@Override
+	public CompanyUserEntity getUserInfoByName(String username) {
+		return userDao.getUserInfoByName(username);
+	}
 }

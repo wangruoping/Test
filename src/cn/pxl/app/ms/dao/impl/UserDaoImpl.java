@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -78,5 +77,25 @@ public class UserDaoImpl extends BaseDaoImpl<CompanyUserEntity> implements UserD
 		CompanyUserEntity object =  (CompanyUserEntity) session.get(CompanyUserEntity.class, id);
 		session.close();
 		return object;
+	}
+
+	@Override
+	public CompanyUserEntity getUserInfoByName(String username) {
+		Session session = sessionFactory.openSession();
+		log.info("查询用户信息开始");
+		Query query = session.createQuery("from CompanyUserEntity userEntity where "
+				+ "username = :username");
+		log.info("查询准备");
+		log.info(query);
+		query.setParameter("username", username);
+		@SuppressWarnings("unchecked")
+		List<CompanyUserEntity> result = query.list();
+		log.info("查询结果");
+		log.info(result);
+		session.close();
+		if(result.size() > 0 ){
+			return result.get(0);
+		}
+		return null;
 	}
 }

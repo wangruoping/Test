@@ -22,4 +22,11 @@ public interface UserDao extends BaseDao<CompanyUserEntity> {
 	 * @return 用户信息
 	 * */
 	CompanyUserEntity getUserInfoByNameAndPass(String username, String password);
+	/**
+	 * 根据用户名获取用户信息
+	 * 
+	 * @param username 用户名
+	 * @return 用户信息
+	 * */
+	CompanyUserEntity getUserInfoByName(String username);
 }

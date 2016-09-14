@@ -2,9 +2,11 @@ package cn.pxl.app.ms.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -18,8 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class CompanyUserEntity {
 
 	@Id
-	@GenericGenerator(name = "uuidGenerator", strategy = "cn.pxl.app.ms.util.UUIDGenerator")
-	@GeneratedValue(generator = "uuidGenerator")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 用户名
 	private String username;
