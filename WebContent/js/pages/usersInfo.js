@@ -89,7 +89,7 @@ $(function(){
 	    		}
 	    	});
     	}else{
-    		$.messager.alert("提示","请选择要删除的类别信息！","error",function(){});
+    		$.messager.alert("提示","请选择要删除的用户信息！","error",function(){});
     	}
 	});
 	

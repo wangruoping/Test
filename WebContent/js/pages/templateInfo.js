@@ -1,24 +1,33 @@
 ﻿var autoCommon;
 
 /**
- * 编辑用户信息
+ * 编辑模板信息
  * */
-function editUserInfo(userId){
-	//获取用户信息
-	autoCommon.click("getUserInfo", {"userid":userId}, function(data){
+function editTemplateInfo(templateId){
+	//获取模板信息
+	autoCommon.click("getTemplateInfo", {"templateid":templateId}, function(data){
 		if(data.status == 1){
-			var userInfo = data.content;				
-			$("#editUserId").val(userInfo.userId);
-			$("#editUsername").val(userInfo.username);
+			var tempalteInfo = data.content;				
+			$("#editTemplateId").val(tempalteInfo.id);
+			$("#templateName").val(tempalteInfo.name);
+			$("#templateHeight").val(tempalteInfo.height);
+			$("#templateWidth").val(tempalteInfo.width);
 			$("#popWindow").window("open");
 		}else{
-			$.messager.alert("提示","用户信息不存在！","info",function(){					
-				$("#userTable").datagrid("load");
+			$.messager.alert("提示","模板信息不存在！","info",function(){					
+				$("#templateTable").datagrid("load");
 			});
 		}					
 	});	
 }
 
+/**
+ * 设计模板信息
+ * */
+function designerTemplateInfo(templateId){
+	//TODO 
+	$("#detailPopWindow").window("open");
+}
 $(function(){
 	//共同方法对象
 	autoCommon = new $.common;
@@ -29,8 +38,8 @@ $(function(){
 	 * */
 	function initTable(){
 		
-		$("#userTable").datagrid({
-			url:'userList',
+		$("#templateTable").datagrid({
+			url:'templateList',
 			pagination:true,
 			rownumbers:true,
 			singleSelect:true,
@@ -39,17 +48,29 @@ $(function(){
 			fit:true,
 			columns:[[
 			    {field:"ck",title:"",checkbox:true},
-                {field:'username',title:'用户名',width:200,align:'center'},
-                {field:'userId',title:'操作',width:60,align:'center',
+                {field:'name',title:'模板名',width:200,align:'center'},
+                {field:'width',title:'宽度',width:100,align:'center',
                     formatter:function(value,rec){
-                        var btn = '<a class="editcls" onclick="editUserInfo(\''+rec.userId+'\')" href="javascript:void(0)">编辑</a>';
-                        return btn;  
+                        return value + "像素";  
+                    }
+                },
+                {field:'height',title:'高度',width:100,align:'center',
+                    formatter:function(value,rec){
+                        return value + "像素";  
+                    }
+                },
+                {field:'id',title:'操作',width:60,align:'center',
+                    formatter:function(value,rec){
+                        var editbtn = '<a class="editcls" onclick="editTemplateInfo(\''+rec.id+'\')" href="javascript:void(0)">编辑</a>';
+                        var designerbtn = '<a class="designercls" onclick="designerTemplateInfo(\''+rec.id+'\')" href="javascript:void(0)">设计模板</a>';
+                        return btn + " " + designerbtn;  
                     }
                 }
             ]],
             pagination: true,
             onLoadSuccess:function(data){
                 $('.editcls').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
+                $('.designercls').linkbutton({text:'设计模板',plain:true,iconCls:'icon-edit'});
             }	
 		});
 	};
@@ -58,29 +79,31 @@ $(function(){
 	initTable();
 	
 	//绑定添加按钮
-	$("#userInfoAdd").bind('click', function(){
-		$("#editUserId").val("");
-		$("#editUsername").val("");
+	$("#templateInfoAdd").bind('click', function(){
+		$("#editTemplateId").val("");
+		$("#templateName").val("");
+		$("#templateHeight").val("");
+		$("#templateWidth").val("");
 		
-    	//打开用户信息添加窗口
+    	//打开模板信息添加窗口
     	$("#popWindow").window("open");	
 	});
 	
 	//绑定删除按钮
-	$("#userInfoDelete").bind('click', function(){
-		var selectedrows = $("#userTable").datagrid('getChecked');
+	$("#templateInfoDelete").bind('click', function(){
+		var selectedrows = $("#templateTable").datagrid('getChecked');
     	if(selectedrows && selectedrows.length > 0){
-			$.messager.confirm("确认", "确认要删除选中的用户吗？", function(r){
+			$.messager.confirm("确认", "确认要删除选中的模板吗？", function(r){
 	    		if(r){
-	        		var userIds = "";
+	        		var templateIds = "";
 	        		for(var i = 0; i < selectedrows.length ; i++){
-	        			userIds += selectedrows[i].userId + "@";
+	        			templateIds += selectedrows[i].id + "@";
 	        		}
 	        		//执行删除操作
-	        		autoCommon.click("deleteUserList", {"userIds":userIds}, function(data){
+	        		autoCommon.click("deleteTemplateList", {"templateIds":templateIds}, function(data){
             			if(data.status == 1){
             				$.messager.alert("提示","删除成功！","info",function(){        						
-        						$("#userTable").datagrid("load");
+        						$("#templateTable").datagrid("load");
         					});
                 		}else{
                 			$.messager.alert("提示","删除失败！","error",function(){});
@@ -89,33 +112,33 @@ $(function(){
 	    		}
 	    	});
     	}else{
-    		$.messager.alert("提示","请选择要删除的类别信息！","error",function(){});
+    		$.messager.alert("提示","请选择要删除的模板信息！","error",function(){});
     	}
 	});
 	
 	//绑定提交按钮
 	$("#editBtn").bind('click', function(){
-		autoCommon.formClick("userInfoHanlde","userInfoForm", function(data){
+		autoCommon.formClick("templateInfoHanlde","templateInfoForm", function(data){
 			var obj = eval('('+data+')');
 			if(obj.status == 2){
-				$.messager.alert("提示","用户不存在！","error",function(){
+				$.messager.alert("提示","模板不存在！","error",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#templateTable").datagrid("load");
 				});
 				
 			}else if(obj.status == 3){
-				$.messager.alert("提示","用户名已存在！","error",function(){
+				$.messager.alert("提示","模板名已存在！","error",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#templateTable").datagrid("load");
 				});
 				
 			}else if(obj.status == 1){
-				$.messager.alert("提示","用户操作成功！","info",function(){
+				$.messager.alert("提示","模板操作成功！","info",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#templateTable").datagrid("load");
 				});
 			}else{
-				$.messager.alert("提示","用户操作失败！","error",function(){});
+				$.messager.alert("提示","模板操作失败！","error",function(){});
 			}
 		});	
 	});

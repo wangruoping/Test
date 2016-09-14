@@ -45,8 +45,4 @@ public class CompanyUserForm implements Serializable {
 		this.admin = admin;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 }

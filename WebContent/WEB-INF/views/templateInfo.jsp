@@ -19,8 +19,8 @@
 		<table id="templateTable" class="easyui-datagrid"></table>
 	</div>
 	 <div id="toolbar">        
-        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="userInfoAdd">添加</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="userInfoDelete">删除</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="templateInfoAdd">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="templateInfoDelete">删除</a>
     </div>        
 	<div id="popWindow" class="easyui-window" title="模板基础信息" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:435px;height:300px;padding:10px;">
 		<div class="easyui-panel" style="padding: 10px;">

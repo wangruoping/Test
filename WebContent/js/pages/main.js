@@ -32,6 +32,23 @@ $(function() {
             });
         }
     });
+    
+    //模板列表
+    $("#templateList").on('click', function() {
+    	var tab = $('.easyui-tabs').tabs('getTab', '模板列表');
+    	
+    	if (tab) {
+            $('.easyui-tabs').tabs('select', '模板列表');
+            refreshTab({tabTitle:'模板列表',url:"templatesInfo"});
+        } else {
+            $('.easyui-tabs').tabs('add', {
+                title : '模板列表',
+                selected: true,
+                closable: true,
+                content:'<iframe scrolling="no" frameborder="0"  src="templatesInfo" style="width:100%;height:100%;"></iframe>'
+            });
+        }
+    });
 
 });
 
