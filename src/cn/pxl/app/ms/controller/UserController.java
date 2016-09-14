@@ -109,7 +109,7 @@ public class UserController {
 					.getUserInfo(companyUserForm.getId());
 			if (companyUserEntity != null) {
 				//判断用户名是否存在
-				if(companyUserEntity.getUsername().equals(companyUserForm.getUsername())){
+				if(!companyUserEntity.getUsername().equals(companyUserForm.getUsername())){
 					CompanyUserEntity geCompanyUserEntity = userService.getUserInfoByName(companyUserForm.getUsername());
 					if(geCompanyUserEntity != null){
 						rd.setStatus("3");
