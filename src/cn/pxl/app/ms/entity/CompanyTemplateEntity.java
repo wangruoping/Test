@@ -25,7 +25,9 @@ public class CompanyTemplateEntity {
 	private Integer width;
 	// 模板高度
 	private Integer height;
-
+	// 模板图片路径
+	private String templateImagePath;
+	
 	public String getId() {
 		return id;
 	}
@@ -56,6 +58,14 @@ public class CompanyTemplateEntity {
 
 	public void setHeight(Integer height) {
 		this.height = height;
+	}
+
+	public String getTemplateImagePath() {
+		return templateImagePath;
+	}
+
+	public void setTemplateImagePath(String templateImagePath) {
+		this.templateImagePath = templateImagePath;
 	}
 
 }
