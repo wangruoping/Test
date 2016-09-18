@@ -105,6 +105,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 			<list>
 				<value>cn.pxl.app.ms.entity.CompanyUserEntity</value>
 				<value>cn.pxl.app.ms.entity.CompanyTemplateEntity</value>
+				<value>cn.pxl.app.ms.entity.CompanyProductAuxEntity</value>
 			</list>
 		</property>
 	</bean>
