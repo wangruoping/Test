@@ -25,6 +25,7 @@
 					<a id="templateList" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',fit:true">模 板 列 表</a>
 				</div>
 				<div title="商品管理" style="padding: 10px;text-align: center;">
+					<a id="productTableManage" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',fit:true">商品表管理</a>
 					<a id="productList" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-large-smartart',fit:true">商 品 列 表</a>
 				</div>
 				<div title="在线标签管理" style="padding: 10px;text-align: center;">
