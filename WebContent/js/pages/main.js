@@ -49,6 +49,23 @@ $(function() {
             });
         }
     });
+    
+    //商品表管理
+    $("#templateList").on('click', function() {
+    	var tab = $('.easyui-tabs').tabs('getTab', '商品表管理');
+    	
+    	if (tab) {
+            $('.easyui-tabs').tabs('select', '商品表管理');
+            refreshTab({tabTitle:'商品表管理',url:"productTableInfo"});
+        } else {
+            $('.easyui-tabs').tabs('add', {
+                title : '商品表管理',
+                selected: true,
+                closable: true,
+                content:'<iframe scrolling="no" frameborder="0"  src="productTableInfo" style="width:100%;height:100%;"></iframe>'
+            });
+        }
+    });
 
 });
 
