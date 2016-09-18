@@ -58,7 +58,30 @@ public class TemplateController {
 	 * 
 	 */
 	@RequestMapping(value = "getTemplateInfo")
-	public @ResponseBody String getUserInfo(HttpSession session,
+	public @ResponseBody String getTemplateInfo(HttpSession session,
+			@RequestParam("templateid") String templateid) {
+		ResultDto rd = new ResultDto();
+		CompanyTemplateEntity companyTemplateEntity = templateService.getTemplateInfo(templateid);
+		if (companyTemplateEntity != null) {
+			TemplateDto templateDto = new TemplateDto();
+			templateDto.setId(companyTemplateEntity.getId());
+			templateDto.setName(companyTemplateEntity.getName());
+			templateDto.setWidth(companyTemplateEntity.getWidth());
+			templateDto.setHeight(companyTemplateEntity.getHeight());
+			rd.setStatus("1");
+			rd.setContent(templateDto);
+		} else {
+			rd.setStatus("0");
+		}
+		return CommonUtils.convertResult(rd, session);
+	}
+	
+	/**
+	 * 获取模板信息
+	 * 
+	 */
+	@RequestMapping(value = "getTemplateDetailInfo")
+	public @ResponseBody String getTemplateDetailInfo(HttpSession session,
 			@RequestParam("templateid") String templateid) {
 		ResultDto rd = new ResultDto();
 		CompanyTemplateEntity companyTemplateEntity = templateService.getTemplateInfo(templateid);
@@ -81,7 +104,7 @@ public class TemplateController {
      * 
      * */
     @RequestMapping(value="deleteTemplateList")
-    public @ResponseBody String deleteUserList(HttpSession session,
+    public @ResponseBody String deleteTemplateList(HttpSession session,
             @RequestParam("templateIds") String templateIds){
     	
     	ResultDto rd = new ResultDto();	
