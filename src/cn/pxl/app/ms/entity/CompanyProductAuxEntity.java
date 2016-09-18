@@ -9,18 +9,24 @@ import javax.persistence.Table;
 /**
  * @author liuxin
  * 
- *         商品信息表
+ *         商品信息附表
  * 
  */
 @Entity
-@Table(name = "company_product")
+@Table(name = "company_product_aux")
 public class CompanyProductAuxEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
-	// 商品CODE
-	private String code;
+	// 商品字段名
+	private String name;
+	// 商品字段显示名
+	private String disname;
+	// 是否显示该字段
+	private Integer disen;
+	// 商品字段显示下标，按从小到大
+	private Integer disindex;
 
 	public String getId() {
 		return id;
@@ -30,12 +36,36 @@ public class CompanyProductAuxEntity {
 		this.id = id;
 	}
 
-	public String getCode() {
-		return code;
+	public String getName() {
+		return name;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDisname() {
+		return disname;
+	}
+
+	public void setDisname(String disname) {
+		this.disname = disname;
+	}
+
+	public Integer getDisen() {
+		return disen;
+	}
+
+	public void setDisen(Integer disen) {
+		this.disen = disen;
+	}
+
+	public Integer getDisindex() {
+		return disindex;
+	}
+
+	public void setDisindex(Integer disindex) {
+		this.disindex = disindex;
 	}
 
 }
