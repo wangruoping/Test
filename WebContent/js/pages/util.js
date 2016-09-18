@@ -19,3 +19,11 @@ function isSoild(solidFunctionArray,functionId){
 	}
 	return false;
 }
+
+function adaptTextInput(text){
+	var sensor = $('<pre>'+ text +'</pre>').css({display: 'none'}); 
+    $('body').append(sensor); 
+    var width = sensor.width();
+    sensor.remove(); 
+    return width;
+}
