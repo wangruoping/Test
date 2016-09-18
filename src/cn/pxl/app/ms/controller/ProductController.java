@@ -26,7 +26,7 @@ public class ProductController {
 
 	/** 跳转到商品表管理页 */
 	@RequestMapping("/productTableInfo")
-	public ModelAndView usersInfo(HttpSession session) {
+	public ModelAndView productTableInfo(HttpSession session) {
 		logger.info("跳转到商品表管理页面");
 		Map<String, String> map = new HashMap<String, String>();
 		return new ModelAndView("productTableInfo", map);
@@ -35,8 +35,8 @@ public class ProductController {
 	/**
 	 * 商品表字段列表
 	 */
-	@RequestMapping(value = "userList")
-	public @ResponseBody PagingDto<CompanyProductAuxDto> userList() {
+	@RequestMapping(value = "productTableList")
+	public @ResponseBody PagingDto<CompanyProductAuxDto> productTableList() {
 		logger.info("获取商品表字段列表");
 		return productService.getAllList();
 	}
