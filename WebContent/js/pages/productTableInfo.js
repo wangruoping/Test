@@ -39,12 +39,18 @@ $(function(){
 			fit:true,
 			columns:[[
 			    {field:"ck",title:"",checkbox:true},
-                {field:'username',title:'字段名',width:200,align:'center'},
-                {field:'username',title:'字段名',width:200,align:'center'},
-                {field:'username',title:'字段名',width:200,align:'center'},
-                {field:'username',title:'字段名',width:200,align:'center'},
-                {field:'username',title:'字段名',width:200,align:'center'},
-                {field:'username',title:'字段名',width:200,align:'center'},
+                {field:'name',title:'字段名',width:200,align:'center'},
+                {field:'disname',title:'显示名称',width:200,align:'center'},
+                {field:'disen',title:'是否允许显示',width:200,align:'center',
+                    formatter:function(value,rec){
+                       if(value == 0){
+                    	   return "显示";
+                       }else{
+                    	   return "不显示";
+                       }
+                    }
+                },
+                {field:'disindex',title:'显示位置',width:200,align:'center'},
                 {field:'userId',title:'操作',width:60,align:'center',
                     formatter:function(value,rec){
                         var btn = '<a class="editcls" onclick="editUserInfo(\''+rec.userId+'\')" href="javascript:void(0)">编辑</a>';
