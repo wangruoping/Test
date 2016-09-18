@@ -26,11 +26,11 @@
 		            <table cellpadding="5" style="width: 100%;">
 		                <tr>
 		                    <td>账号:</td>
-		                    <td><input value="admin888" class="easyui-validatebox" maxlength="16" type="text" name="username" data-options="required:true,validType:'length[6,16]'"></input></td>
+		                    <td><input value="admin123" class="easyui-validatebox" maxlength="16" type="text" name="username" data-options="required:true,validType:'length[6,16]'"></input></td>
 		                </tr>
 		                <tr>
 		                    <td>秘密:</td>
-		                    <td><input value="admin888" class="easyui-validatebox" maxlength="16" type="password" name="password" data-options="required:true,validType:'length[6,16]'"></input></td>
+		                    <td><input value="123456" class="easyui-validatebox" maxlength="16" type="password" name="password" data-options="required:true,validType:'length[6,16]'"></input></td>
 		                </tr>
 		            </table>
 		        </form>
