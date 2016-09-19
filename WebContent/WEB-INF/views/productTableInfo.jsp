@@ -19,37 +19,36 @@
 		<table id="productTable" class="easyui-datagrid"></table>
 	</div>
 	 <div id="toolbar">        
-        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="userInfoAdd">添加</a>
-        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="userInfoDelete">删除</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" id="productTableInfoAdd">添加</a>
+        <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" id="productTableInfoDelete">删除</a>
     </div>        
 	<div id="popWindow" class="easyui-window" title="商品表字段操作" data-options="modal:true,closed:true,iconCls:'icon-save'" style="width:435px;height:300px;padding:10px;">
 		<div class="easyui-panel" style="padding: 10px;">
-			<form id="productInfoForm" method="post">
+			<form id="productTableInfoForm" method="post">
 				<table>
 					<tr>
-						<td style="width:50px;">字段名：</td>
+						<td style="width:80px;">字段名：</td>
 						<td><input id="editName" class="easyui-validatebox"
 							name="name" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">字段别名：</td>
+						<td style="width:80px;">显示名称：</td>
 						<td><input id="editOthername" class="easyui-validatebox"
 							name="othername" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">长度：</td>
-						<td><input id="editLength" class="easyui-validatebox"
+						<td style="width:80px;">长度：</td>
+						<td><input id="editLength" class="easyui-numberbox"
 							name="length" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">显示顺序：</td>
-						<td><input id="editDisIndex" class="easyui-validatebox"
+						<td style="width:80px;">显示顺序：</td>
+						<td><input id="editDisIndex" class="easyui-numberbox"
 							name="disIndex" data-options="required:true" /></td>
 					</tr>
 					<tr>
-						<td style="width:50px;">是否显示：</td>
-						<td><input id="editDisEn" class="easyui-validatebox"
-							name="disEn" data-options="required:true" /></td>
+						<td style="width:80px;">是否显示：</td>
+						<td><input id="editDisEn" type="checkbox" name="disEn" value="1"/></td>
 					</tr>
 					<tr>
 						<td><a id="editBtn" href="javascript:void(0)"

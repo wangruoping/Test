@@ -1,19 +1,27 @@
 ﻿var autoCommon;
 
 /**
- * 编辑用户信息
+ * 编辑表字段信息
  * */
-function editUserInfo(userId){
-	//获取用户信息
-	autoCommon.click("getUserInfo", {"userid":userId}, function(data){
+function editProductTableInfo(id){
+	//获取表字段信息
+	autoCommon.click("getProductTableInfo", {"id":id}, function(data){
 		if(data.status == 1){
-			var userInfo = data.content;				
-			$("#editUserId").val(userInfo.userId);
-			$("#editUsername").val(userInfo.username);
+			var productTableInfo = data.content;		
+			$("#editId").val(productTableInfo.id);
+			$("#editName").val(productTableInfo.name);
+			$("#editOthername").val(productTableInfo.disname);
+			$("#editLength").numberbox("setValue", productTableInfo.length);
+			$("#editDisIndex").numberbox("setValue", productTableInfo.disIndex);
+			if(productTableInfo.disen == 1){
+				$("#editDisEn").attr("checked",true);
+			}else{
+				$("#editDisEn").attr("checked",false);
+			}
 			$("#popWindow").window("open");
 		}else{
-			$.messager.alert("提示","用户信息不存在！","info",function(){					
-				$("#userTable").datagrid("load");
+			$.messager.alert("提示","表字段信息不存在！","info",function(){					
+				$("#productTable").datagrid("load");
 			});
 		}					
 	});	
@@ -41,7 +49,7 @@ $(function(){
 			    {field:"ck",title:"",checkbox:true},
                 {field:'name',title:'字段名',width:200,align:'center'},
                 {field:'disname',title:'显示名称',width:200,align:'center'},
-                {field:'disen',title:'是否允许显示',width:200,align:'center',
+                {field:'disen',title:'是否显示',width:200,align:'center',
                     formatter:function(value,rec){
                        if(value == 0){
                     	   return "显示";
@@ -50,10 +58,10 @@ $(function(){
                        }
                     }
                 },
-                {field:'disindex',title:'显示位置',width:200,align:'center'},
+                {field:'disindex',title:'显示顺序',width:200,align:'center'},
                 {field:'userId',title:'操作',width:60,align:'center',
                     formatter:function(value,rec){
-                        var btn = '<a class="editcls" onclick="editUserInfo(\''+rec.userId+'\')" href="javascript:void(0)">编辑</a>';
+                        var btn = '<a class="editcls" onclick="editProductTableInfo(\''+rec.id+'\')" href="javascript:void(0)">编辑</a>';
                         return btn;  
                     }
                 }
@@ -69,29 +77,32 @@ $(function(){
 	initTable();
 	
 	//绑定添加按钮
-	$("#userInfoAdd").bind('click', function(){
-		$("#editUserId").val("");
-		$("#editUsername").val("");
-		
+	$("#productTableInfoAdd").bind('click', function(){
+		$("#editId").val("");
+		$("#editName").val("");
+		$("#editOthername").val("");
+		$("#editLength").numberbox("setValue", "");
+		$("#editDisIndex").numberbox("setValue", "");
+		$("#editDisEn").attr("checked",false);
     	//打开用户信息添加窗口
     	$("#popWindow").window("open");	
 	});
 	
 	//绑定删除按钮
-	$("#userInfoDelete").bind('click', function(){
-		var selectedrows = $("#userTable").datagrid('getChecked');
+	$("#productTableInfoDelete").bind('click', function(){
+		var selectedrows = $("#productTable").datagrid('getChecked');
     	if(selectedrows && selectedrows.length > 0){
-			$.messager.confirm("确认", "确认要删除选中的用户吗？", function(r){
+			$.messager.confirm("确认", "确认要删除选中的表字段吗？", function(r){
 	    		if(r){
-	        		var userIds = "";
+	        		var productTableIds = "";
 	        		for(var i = 0; i < selectedrows.length ; i++){
-	        			userIds += selectedrows[i].userId + "@";
+	        			productTableIds += selectedrows[i].userId + "@";
 	        		}
 	        		//执行删除操作
-	        		autoCommon.click("deleteUserList", {"userIds":userIds}, function(data){
+	        		autoCommon.click("deleteProductTableList", {"productTableIds":productTableIds}, function(data){
             			if(data.status == 1){
             				$.messager.alert("提示","删除成功！","info",function(){        						
-        						$("#userTable").datagrid("load");
+        						$("#productTable").datagrid("load");
         					});
                 		}else{
                 			$.messager.alert("提示","删除失败！","error",function(){});
@@ -100,33 +111,33 @@ $(function(){
 	    		}
 	    	});
     	}else{
-    		$.messager.alert("提示","请选择要删除的用户信息！","error",function(){});
+    		$.messager.alert("提示","请选择要删除的表字段信息！","error",function(){});
     	}
 	});
 	
 	//绑定提交按钮
 	$("#editBtn").bind('click', function(){
-		autoCommon.formClick("userInfoHanlde","userInfoForm", function(data){
+		autoCommon.formClick("productTableInfoHanlde","productTableInfoForm", function(data){
 			var obj = eval('('+data+')');
 			if(obj.status == 2){
-				$.messager.alert("提示","用户不存在！","error",function(){
+				$.messager.alert("提示","表字段不存在！","error",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#productTable").datagrid("load");
 				});
 				
 			}else if(obj.status == 3){
-				$.messager.alert("提示","用户名已存在！","error",function(){
+				$.messager.alert("提示","表字段已存在！","error",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#productTable").datagrid("load");
 				});
 				
 			}else if(obj.status == 1){
-				$.messager.alert("提示","用户操作成功！","info",function(){
+				$.messager.alert("提示","表字段操作成功！","info",function(){
 					$("#popWindow").window("close");
-					$("#userTable").datagrid("load");
+					$("#productTable").datagrid("load");
 				});
 			}else{
-				$.messager.alert("提示","用户操作失败！","error",function(){});
+				$.messager.alert("提示","表字段操作失败！","error",function(){});
 			}
 		});	
 	});

@@ -51,7 +51,7 @@ $(function() {
     });
     
     //商品表管理
-    $("#templateList").on('click', function() {
+    $("#productTableManage").on('click', function() {
     	var tab = $('.easyui-tabs').tabs('getTab', '商品表管理');
     	
     	if (tab) {

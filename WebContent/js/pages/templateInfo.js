@@ -165,8 +165,8 @@ $(function(){
 	$("#templateInfoAdd").bind('click', function(){
 		$("#editTemplateId").val("");
 		$("#templateName").val("");
-		$("#templateHeight").val("");
-		$("#templateWidth").val("");
+		$("#templateHeight").numberbox("setValue", "");
+		$("#templateWidth").numberbox("setValue", "");
 		
     	//打开模板信息添加窗口
     	$("#popWindow").window("open");	

@@ -5,20 +5,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import cn.pxl.app.ms.dao.ProductDao;
-import cn.pxl.app.ms.dao.TemplateDao;
+import cn.pxl.app.ms.dao.impl.UserDaoImpl;
 import cn.pxl.app.ms.dto.CompanyProductAuxDto;
 import cn.pxl.app.ms.dto.PagingDto;
-import cn.pxl.app.ms.dto.UserDto;
 import cn.pxl.app.ms.entity.CompanyProductAuxEntity;
-import cn.pxl.app.ms.entity.CompanyUserEntity;
 import cn.pxl.app.ms.service.ProductService;
 
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
 
+	Logger log = Logger.getLogger(UserDaoImpl.class);
+	
 	@Resource(name="productDao")
 	private ProductDao productDao;
 
@@ -44,6 +45,33 @@ public class ProductServiceImpl implements ProductService {
         result.setRows(resultList);
         result.setTotal(resultList.size());
         return result;
+	}
+
+	@Override
+	public CompanyProductAuxEntity getProductTableByName(String name) {
+		return productDao.getProductTableByName(name);
+	}
+
+	@Override
+	public boolean addProductAux(CompanyProductAuxEntity companyProductAuxEntity) {
+		productDao.save(companyProductAuxEntity);
+		return true;
+	}
+
+	@Override
+	public CompanyProductAuxEntity getProductTableInfo(String id) {
+		return (CompanyProductAuxEntity) productDao.findById(id);
+	}
+
+	@Override
+	public boolean updateProductTable(CompanyProductAuxEntity companyProductAuxEntity) {
+		productDao.update(companyProductAuxEntity);
+		return true;
+	}
+
+	@Override
+	public boolean addProductField(CompanyProductAuxEntity companyProductAuxEntity) {
+		return productDao.addProductField(companyProductAuxEntity);
 	}
 
 }
