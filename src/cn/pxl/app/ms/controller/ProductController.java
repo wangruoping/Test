@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,6 +48,50 @@ public class ProductController {
 	}
 	
 	/**
+	 * 获取商品表字段信息
+	 * 
+	 */
+	@RequestMapping(value = "getProductTableInfo")
+	public @ResponseBody String getProductTableInfo(HttpSession session,
+			@RequestParam("id") String id) {
+		ResultDto rd = new ResultDto();
+		CompanyProductAuxEntity companyProductAuxEntity = productService.getProductTableInfo(id);
+		if (companyProductAuxEntity != null) {
+			CompanyProductAuxDto companyProductAuxDto = new CompanyProductAuxDto();
+			companyProductAuxDto.setId(companyProductAuxEntity.getId());
+			companyProductAuxDto.setName(companyProductAuxEntity.getName());
+			companyProductAuxDto.setDisname(companyProductAuxEntity.getDisname());
+			companyProductAuxDto.setDisindex(companyProductAuxEntity.getDisindex());
+			companyProductAuxDto.setDisen(companyProductAuxEntity.getDisen());
+			rd.setStatus("1");
+			rd.setContent(companyProductAuxDto);
+		} else {
+			rd.setStatus("0");
+		}
+		return CommonUtils.convertResult(rd, session);
+	}
+	
+	/**
+     * 商品表字段删除
+     * 
+     * */
+	@RequestMapping(value="deleteProductTableList")
+    public @ResponseBody String deleteProductTableList(HttpSession session,
+            @RequestParam("productTableIds") String productTableIds){
+    	
+    	ResultDto rd = new ResultDto();	
+		String[] productTableIdStrings = productTableIds.split("@");
+		if(productTableIdStrings.length > 0 && productService.deleteProductTableList(productTableIdStrings)){				
+			rd.setStatus("1");
+			rd.setContent("");
+		}else{
+			rd.setStatus("0");
+			rd.setContent("");
+		}
+		return CommonUtils.convertResult(rd, session);
+    }
+	
+	/**
 	 * 商品表字段添加/修改
 	 * 
 	 */
@@ -62,11 +107,16 @@ public class ProductController {
 					.getProductTableInfo(companyProductAuxForm.getId());
 			if (getCompanyProductAuxEntity != null) {
 				//判断字段名是否存在
-				CompanyProductAuxEntity companyProductAuxEntity = productService.getProductTableByName(companyProductAuxForm.getName());
-				if(companyProductAuxEntity != null){
-					rd.setStatus("3");
-					rd.setContent("");
-					return CommonUtils.convertResult(rd, session);
+				boolean changeNameFlag = false;
+				String oldField = getCompanyProductAuxEntity.getName();
+				if(!getCompanyProductAuxEntity.getName().equals(companyProductAuxForm.getName())){
+					CompanyProductAuxEntity companyProductAuxEntity = productService.getProductTableByName(companyProductAuxForm.getName());
+					if(companyProductAuxEntity != null){
+						rd.setStatus("3");
+						rd.setContent("");
+						return CommonUtils.convertResult(rd, session);
+					}
+					changeNameFlag = true;
 				}
 				getCompanyProductAuxEntity.setName(companyProductAuxForm.getName());
 				getCompanyProductAuxEntity.setDisname(companyProductAuxForm.getDisname());
@@ -74,10 +124,22 @@ public class ProductController {
 				getCompanyProductAuxEntity.setDisen(companyProductAuxForm.getDisen());
 				if (productService.updateProductTable(getCompanyProductAuxEntity)) {
 					
-					//更新商品表字段
-					
-					rd.setStatus("1");
-					rd.setContent("");
+					//判断字段名称是否修改
+					if(changeNameFlag){
+						//更新商品表字段
+						boolean addFlag = productService.updateProductField(oldField, getCompanyProductAuxEntity);
+						if(addFlag){
+							rd.setStatus("1");
+							rd.setContent("");
+						}else{
+							//删除之前添加的数据 TODO
+							rd.setStatus("0");
+							rd.setContent("");
+						}
+					}else{
+						rd.setStatus("1");
+						rd.setContent("");
+					}
 				} else {
 					rd.setStatus("0");
 					rd.setContent("");

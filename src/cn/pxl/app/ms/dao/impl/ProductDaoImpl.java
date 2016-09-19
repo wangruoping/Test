@@ -22,26 +22,17 @@ public class ProductDaoImpl extends BaseDaoImpl<CompanyProductAuxEntity> impleme
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
 		List<CompanyProductAuxEntity> list = session.createCriteria(CompanyProductAuxEntity.class)
-			.addOrder(Order.asc("disen")).list();
+			.addOrder(Order.asc("disindex")).list();
 		session.close();
 		return list;
 	}
 
 	@Override
 	public Object findById(String id) {
-		return null;
-	}
-
-	@Override
-	public boolean addProductField(CompanyProductAuxEntity companyProductAuxEntity) {
 		Session session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-		//添加 表字段的更新语句
-		String addFieldSql = "ALTER TABLE company_product ADD " +companyProductAuxEntity.getName()+ " varchar(100);";
-		int updateCount = session.createSQLQuery(addFieldSql).executeUpdate();
-		transaction.commit();
+		CompanyProductAuxEntity object =  (CompanyProductAuxEntity) session.get(CompanyProductAuxEntity.class, id);
 		session.close();
-		return updateCount == 0 ? true : false;
+		return object;
 	}
 
 	@Override
@@ -62,6 +53,42 @@ public class ProductDaoImpl extends BaseDaoImpl<CompanyProductAuxEntity> impleme
 			return result.get(0);
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean addProductField(CompanyProductAuxEntity companyProductAuxEntity) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		//添加 表字段的更新语句
+		String addFieldSql = "ALTER TABLE company_product ADD " +companyProductAuxEntity.getName()+ " varchar(100);";
+		int updateCount = session.createSQLQuery(addFieldSql).executeUpdate();
+		transaction.commit();
+		session.close();
+		return updateCount == 0 ? true : false;
+	}
+
+	@Override
+	public boolean deleteProductField(String name) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		//添加 表字段的更新语句
+		String addFieldSql = "ALTER TABLE company_product DROP " +name + ";";
+		int updateCount = session.createSQLQuery(addFieldSql).executeUpdate();
+		transaction.commit();
+		session.close();
+		return updateCount == 0 ? true : false;
+	}
+
+	@Override
+	public boolean updateProductField(String oldField, CompanyProductAuxEntity companyProductAuxEntity) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		//添加 表字段的更新语句  
+		String addFieldSql = "ALTER TABLE company_product CHANGE " + oldField + " " +companyProductAuxEntity.getName()+ " varchar(100);";
+		int updateCount = session.createSQLQuery(addFieldSql).executeUpdate();
+		transaction.commit();
+		session.close();
+		return updateCount == 0 ? true : false;
 	}
 	
 	

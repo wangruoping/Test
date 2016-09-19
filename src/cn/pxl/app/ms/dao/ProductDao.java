@@ -7,6 +7,10 @@ public interface ProductDao extends BaseDao<CompanyProductAuxEntity> {
 	boolean addProductField(CompanyProductAuxEntity companyProductAuxEntity);
 
 	CompanyProductAuxEntity getProductTableByName(String name);
+
+	boolean deleteProductField(String name);
+
+	boolean updateProductField(String oldField, CompanyProductAuxEntity getCompanyProductAuxEntity);
 	
 	
 }

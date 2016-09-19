@@ -11,8 +11,8 @@ function editProductTableInfo(id){
 			$("#editId").val(productTableInfo.id);
 			$("#editName").val(productTableInfo.name);
 			$("#editOthername").val(productTableInfo.disname);
-			$("#editLength").numberbox("setValue", productTableInfo.length);
-			$("#editDisIndex").numberbox("setValue", productTableInfo.disIndex);
+//			$("#editLength").numberbox("setValue", productTableInfo.length);
+			$("#editDisIndex").numberbox("setValue", productTableInfo.disindex);
 			if(productTableInfo.disen == 1){
 				$("#editDisEn").attr("checked",true);
 			}else{
@@ -51,7 +51,7 @@ $(function(){
                 {field:'disname',title:'显示名称',width:200,align:'center'},
                 {field:'disen',title:'是否显示',width:200,align:'center',
                     formatter:function(value,rec){
-                       if(value == 0){
+                       if(value == 1){
                     	   return "显示";
                        }else{
                     	   return "不显示";
@@ -82,7 +82,7 @@ $(function(){
 		$("#editName").val("");
 		$("#editOthername").val("");
 		$("#editLength").numberbox("setValue", "");
-		$("#editDisIndex").numberbox("setValue", "");
+//		$("#editDisIndex").numberbox("setValue", "");
 		$("#editDisEn").attr("checked",false);
     	//打开用户信息添加窗口
     	$("#popWindow").window("open");	
@@ -96,7 +96,7 @@ $(function(){
 	    		if(r){
 	        		var productTableIds = "";
 	        		for(var i = 0; i < selectedrows.length ; i++){
-	        			productTableIds += selectedrows[i].userId + "@";
+	        			productTableIds += selectedrows[i].id + "@";
 	        		}
 	        		//执行删除操作
 	        		autoCommon.click("deleteProductTableList", {"productTableIds":productTableIds}, function(data){

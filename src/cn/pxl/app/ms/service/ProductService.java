@@ -18,4 +18,8 @@ public interface ProductService {
 
 	boolean addProductField(CompanyProductAuxEntity companyProductAuxEntity);
 
+	boolean deleteProductTableList(String[] productTableIdStrings);
+
+	boolean updateProductField(String oldField, CompanyProductAuxEntity getCompanyProductAuxEntity);
+
 }

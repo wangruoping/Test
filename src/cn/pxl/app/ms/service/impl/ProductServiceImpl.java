@@ -70,4 +70,21 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.addProductField(companyProductAuxEntity);
 	}
 
+	@Override
+	public boolean deleteProductTableList(String[] productTableIdStrings) {
+		for (int i = 0; i < productTableIdStrings.length; i++) {
+			CompanyProductAuxEntity companyProductAuxEntity = (CompanyProductAuxEntity) productDao.findById(productTableIdStrings[i]);
+			productDao.delete(companyProductAuxEntity);
+			
+			//删除表字段
+			productDao.deleteProductField(companyProductAuxEntity.getName());
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateProductField(String oldField, CompanyProductAuxEntity getCompanyProductAuxEntity) {
+		return productDao.updateProductField(oldField, getCompanyProductAuxEntity);
+	}
+
 }
