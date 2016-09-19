@@ -34,21 +34,21 @@
 					<tr>
 						<td style="width:80px;">显示名称：</td>
 						<td><input id="editOthername" class="easyui-validatebox"
-							name="othername" data-options="required:true" /></td>
+							name="disname" data-options="required:true" /></td>
 					</tr>
-					<tr>
-						<td style="width:80px;">长度：</td>
-						<td><input id="editLength" class="easyui-numberbox"
-							name="length" data-options="required:true" /></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<td style="width:80px;">长度：</td> -->
+<!-- 						<td><input id="editLength" class="easyui-numberbox" -->
+<!-- 							name="length" data-options="required:true" /></td> -->
+<!-- 					</tr> -->
 					<tr>
 						<td style="width:80px;">显示顺序：</td>
 						<td><input id="editDisIndex" class="easyui-numberbox"
-							name="disIndex" data-options="required:true" /></td>
+							name="disindex" data-options="required:true" /></td>
 					</tr>
 					<tr>
 						<td style="width:80px;">是否显示：</td>
-						<td><input id="editDisEn" type="checkbox" name="disEn" value="1"/></td>
+						<td><input id="editDisEn" type="checkbox" name="disen" value="1"/></td>
 					</tr>
 					<tr>
 						<td><a id="editBtn" href="javascript:void(0)"

@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import cn.pxl.app.ms.dao.ProductDao;
@@ -20,7 +21,8 @@ public class ProductDaoImpl extends BaseDaoImpl<CompanyProductAuxEntity> impleme
 	public List<CompanyProductAuxEntity> findAll() {
 		Session session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<CompanyProductAuxEntity> list = session.createCriteria(CompanyProductAuxEntity.class).list();
+		List<CompanyProductAuxEntity> list = session.createCriteria(CompanyProductAuxEntity.class)
+			.addOrder(Order.asc("disen")).list();
 		session.close();
 		return list;
 	}
@@ -35,11 +37,11 @@ public class ProductDaoImpl extends BaseDaoImpl<CompanyProductAuxEntity> impleme
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		//添加 表字段的更新语句
-		String addFieldSql = "ALTER TABLE company_product ADD " +companyProductAuxEntity.getName()+ " varchar;";
+		String addFieldSql = "ALTER TABLE company_product ADD " +companyProductAuxEntity.getName()+ " varchar(100);";
 		int updateCount = session.createSQLQuery(addFieldSql).executeUpdate();
 		transaction.commit();
 		session.close();
-		return updateCount > 0 ? true : false;
+		return updateCount == 0 ? true : false;
 	}
 
 	@Override

@@ -27,20 +27,16 @@ public class ProductServiceImpl implements ProductService {
 	public PagingDto<CompanyProductAuxDto> getAllList() {
 		
 		PagingDto<CompanyProductAuxDto> result = new PagingDto<CompanyProductAuxDto>();
-
         List<CompanyProductAuxDto> resultList = new ArrayList<CompanyProductAuxDto>();
-
-        if (result.getTotal() > 0) {
-            List<CompanyProductAuxEntity> list = productDao.findAll();
-            for (CompanyProductAuxEntity ue : list) {
-            	CompanyProductAuxDto companyProductAuxDto = new CompanyProductAuxDto();
-            	companyProductAuxDto.setId(ue.getId());
-            	companyProductAuxDto.setName(ue.getName());
-            	companyProductAuxDto.setDisname(ue.getDisname());
-            	companyProductAuxDto.setDisen(ue.getDisen());
-            	companyProductAuxDto.setDisindex(ue.getDisindex());
-                resultList.add(companyProductAuxDto);
-            }
+        List<CompanyProductAuxEntity> list = productDao.findAll();
+        for (CompanyProductAuxEntity ue : list) {
+        	CompanyProductAuxDto companyProductAuxDto = new CompanyProductAuxDto();
+        	companyProductAuxDto.setId(ue.getId());
+        	companyProductAuxDto.setName(ue.getName());
+        	companyProductAuxDto.setDisname(ue.getDisname());
+        	companyProductAuxDto.setDisen(ue.getDisen());
+        	companyProductAuxDto.setDisindex(ue.getDisindex());
+            resultList.add(companyProductAuxDto);
         }
         result.setRows(resultList);
         result.setTotal(resultList.size());
