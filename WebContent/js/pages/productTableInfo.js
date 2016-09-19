@@ -66,7 +66,6 @@ $(function(){
                     }
                 }
             ]],
-            pagination: true,
             onLoadSuccess:function(data){
                 $('.editcls').linkbutton({text:'编辑',plain:true,iconCls:'icon-edit'});
             }	

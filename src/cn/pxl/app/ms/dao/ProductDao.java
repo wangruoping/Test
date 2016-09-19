@@ -1,5 +1,7 @@
 package cn.pxl.app.ms.dao;
 
+import java.util.List;
+
 import cn.pxl.app.ms.entity.CompanyProductAuxEntity;
 
 public interface ProductDao extends BaseDao<CompanyProductAuxEntity> {
@@ -11,6 +13,8 @@ public interface ProductDao extends BaseDao<CompanyProductAuxEntity> {
 	boolean deleteProductField(String name);
 
 	boolean updateProductField(String oldField, CompanyProductAuxEntity getCompanyProductAuxEntity);
+
+	List<CompanyProductAuxEntity> getAllProductTable();
 	
 	
 }

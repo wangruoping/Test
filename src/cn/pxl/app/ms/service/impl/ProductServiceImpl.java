@@ -87,4 +87,9 @@ public class ProductServiceImpl implements ProductService {
 		return productDao.updateProductField(oldField, getCompanyProductAuxEntity);
 	}
 
+	@Override
+	public List<CompanyProductAuxEntity> getAllProductTable() {
+		return productDao.getAllProductTable();
+	}
+
 }

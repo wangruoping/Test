@@ -5,13 +5,14 @@ package cn.pxl.app.ms.dto;
  * 
  * @author liux
  * @version 1.0
- * */
+ */
 public class ColumnDto {
 
 	private String field;// 列字段名称
 	private String title;// 列标题文本
 	private int width;// 列的宽度
 	private String align;// 指明如何对齐列数据。可以使用的值有：'left','right','center'
+	private String editor;// 行编辑 text
 
 	public String getField() {
 		return field;
@@ -43,6 +44,14 @@ public class ColumnDto {
 
 	public void setAlign(String align) {
 		this.align = align;
+	}
+
+	public String getEditor() {
+		return editor;
+	}
+
+	public void setEditor(String editor) {
+		this.editor = editor;
 	}
 
 }

@@ -1,6 +1,8 @@
 package cn.pxl.app.ms.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.pxl.app.ms.dto.ColumnDto;
 import cn.pxl.app.ms.dto.CompanyProductAuxDto;
 import cn.pxl.app.ms.dto.PagingDto;
 import cn.pxl.app.ms.dto.ResultDto;
 import cn.pxl.app.ms.entity.CompanyProductAuxEntity;
 import cn.pxl.app.ms.form.CompanyProductAuxForm;
+import cn.pxl.app.ms.form.CompanyProductForm;
 import cn.pxl.app.ms.service.ProductService;
 import cn.pxl.app.ms.util.CommonUtils;
 
@@ -189,5 +193,52 @@ public class ProductController {
 		Map<String, String> map = new HashMap<String, String>();
 		return new ModelAndView("productDataInfo", map);
 	}
+	
+	/**
+	 * 获取商品表字段列表信息
+	 * 
+	 */
+	@RequestMapping(value = "getAllProductTableInfo")
+	public @ResponseBody String getAllProductTableInfo(HttpSession session) {
+		ResultDto rd = new ResultDto();
+		List<List<ColumnDto>> tmList = new ArrayList<List<ColumnDto>>();
+		List<ColumnDto> columnDtos = new ArrayList<ColumnDto>();
+		List<CompanyProductAuxEntity> companyProductAuxEntities= productService.getAllProductTable();
+		for (int i = 0; i < companyProductAuxEntities.size(); i++) {
+			CompanyProductAuxEntity gProductAuxEntity = companyProductAuxEntities.get(i);
+			ColumnDto columnDto = new ColumnDto();
+			columnDto.setField(gProductAuxEntity.getName());
+			columnDto.setAlign("center");
+			columnDto.setTitle(gProductAuxEntity.getDisname());
+			columnDto.setWidth(100);
+			columnDto.setEditor("text");
+			columnDtos.add(columnDto);
+		}
+		tmList.add(columnDtos);
+		rd.setStatus("1");
+		rd.setContent(tmList);
+		return CommonUtils.convertResult(rd, session);
+	}
+	
+	/**
+	 * 商品信息添加/修改
+	 * 
+	 */
+	@RequestMapping(value = "saveProductInfo", produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String saveProductInfo(HttpSession session,
+			@ModelAttribute("CompanyProductForm") CompanyProductForm companyProductForm) {
+		ResultDto rd = new ResultDto();
+		if(companyProductForm.getIsNewRecord() == null){
+			//更新
+		}else{
+			//添加
+		}
+		
+		rd.setStatus("1");
+		rd.setContent("");
+		return CommonUtils.convertResult(rd, session);
+	}
+		
 
 }

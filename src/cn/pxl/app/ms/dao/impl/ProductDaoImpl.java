@@ -3,10 +3,12 @@ package cn.pxl.app.ms.dao.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.pxl.app.ms.dao.ProductDao;
@@ -89,6 +91,17 @@ public class ProductDaoImpl extends BaseDaoImpl<CompanyProductAuxEntity> impleme
 		transaction.commit();
 		session.close();
 		return updateCount == 0 ? true : false;
+	}
+
+	@Override
+	public List<CompanyProductAuxEntity> getAllProductTable() {
+		Session session = sessionFactory.openSession();
+		@SuppressWarnings("unchecked")
+		List<CompanyProductAuxEntity> list = session.createCriteria(CompanyProductAuxEntity.class)
+			.add(Restrictions.eq("disen", 1))
+			.addOrder(Order.asc("disindex")).list();
+		session.close();
+		return list;
 	}
 	
 	
