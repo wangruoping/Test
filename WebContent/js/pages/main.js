@@ -66,6 +66,23 @@ $(function() {
             });
         }
     });
+    
+    //商品列表管理
+    $("#productList").on('click', function() {
+    	var tab = $('.easyui-tabs').tabs('getTab', '商品列表');
+    	
+    	if (tab) {
+            $('.easyui-tabs').tabs('select', '商品列表');
+            refreshTab({tabTitle:'商品列表',url:"productDataInfo"});
+        } else {
+            $('.easyui-tabs').tabs('add', {
+                title : '商品列表',
+                selected: true,
+                closable: true,
+                content:'<iframe scrolling="no" frameborder="0"  src="productDataInfo" style="width:100%;height:100%;"></iframe>'
+            });
+        }
+    });
 
 });
 

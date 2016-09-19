@@ -180,5 +180,14 @@ public class ProductController {
 		}
 		return CommonUtils.convertResult(rd, session);
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	/** 跳转到商品列表页 */
+	@RequestMapping("/productDataInfo")
+	public ModelAndView productDataInfo(HttpSession session) {
+		logger.info("跳转到商品列表页面");
+		Map<String, String> map = new HashMap<String, String>();
+		return new ModelAndView("productDataInfo", map);
+	}
 
 }
